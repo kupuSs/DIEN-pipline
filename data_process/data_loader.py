@@ -7,7 +7,7 @@ import pandas as pd
 from data_process.utils import get_stats, reduce_mem_usage_sd
 
 
-def data_loader(path, chunkSize=1000, data_type='amazon_books', verbose=False, return_chunks=False):
+def data_loader(path, chunkSize=100000, data_type='amazon_books', verbose=False, return_chunks=False):
     reader = pd.read_csv(path, iterator=True)
     loop = True
     chunks = []
@@ -19,8 +19,8 @@ def data_loader(path, chunkSize=1000, data_type='amazon_books', verbose=False, r
             #     chunk = chunk[chunk.date >= 20190617]  # taobao数据量太大，sequence太长，负采样时间太久，顾只取3天
             chunks.append(chunk)
             count += 1
-            if count == 1:
-                break
+            # if count == 1:
+            #     break
         except StopIteration:
             loop = False
             print("Iteration is stopped.")
